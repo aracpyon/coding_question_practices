@@ -16,7 +16,13 @@
 // lucasNumberMemo(41)  // => 370248451
 // lucasNumberMemo(42)  // => 599074578
 function lucasNumberMemo(n, memo = {}) {
+    if (n in memo) return memo[n];
+    if (n === 0) return 2;
+    if (n === 1) return 1;
+    
+    memo[n] = lucasNumberMemo(n-1, memo) + lucasNumberMemo(n-2, memo)
 
+    return memo[n];
 }
 
 
@@ -34,7 +40,53 @@ function lucasNumberMemo(n, memo = {}) {
 // minChange([1, 5, 10, 25], 15)    // => 2, because 10 + 5 = 15
 // minChange([1, 5, 10, 25], 100)   // => 4, because 25 + 25 + 25 + 25 = 100
 function minChange(coins, amount, memo = {}) {
+    /*
+    Clarifying Questions (10min)
+        1. input
+            - coins array has options: coins.length
+            - There are nth options to take. 
+            - The coins are listed in ascending order
+        2. Output
+           - Has to be the minimum change. 
+        3. Edge Cases 
+            - Can there be a empty array? 
+            - Coins can be any coins; it's not real life coin system
+            - Amount could be 0.
+        4. Assumptions
 
+    Communication Your Approach (Take Notes / Pseudo-code) (25min)
+        - I will use memoization and solve it recursively. 
+        - I will think of the amount as node 
+        - we have options given by the array to reduce the amout. 
+        - Each node represents a single recursive call(stack) 
+                        N
+        N-coins[0]  N-coins[1]  N-coins[2]  N-coins[3] ...
+prevN - coins[0] 
+        - but there is a rule: you can only use the coin that is smaller or equal to the amount
+        - As the amount gets smaller in the tree, I will save that stack tree in the memo. 
+
+        Coding - Clean (Readability), Quick, Semantic Variable Names, Helper Functions (5min)
+        Checking For Robustness - Testing Examples
+
+        I don't have to think about coins.length === 0 because all the amount will be eventually 
+
+        minChange([1, 5, 10, 25], 100)
+    */ 
+    
+    if (amount === 0) return 0; // no coins
+    if (amount in memo) return memo[amount];
+
+    let num_coins = []; //in order to store all the possibilities
+    coins.forEach( coin => {
+        if (coin <= amount){
+            // Making a recursive call for every coin option 
+            num_coins.push(minChange(coins, amount - coin, memo) + 1)//We need to plus 1 since I used one coin in this stack. 
+        }
+    })
+
+    memo[amount] = Math.min(...num_coins);
+    return memo[amount]
+    
 }
 
 
