@@ -139,35 +139,35 @@ function flatten(data) {
 // 
 // Example:
 //
-// let desktop = {
-//     '/images': {
-//         'app_academy_logo.svg': null,
-//         '/parks': {
-//             'yosemite.jpeg': null,
-//             'acadia.jpeg': null,
-//             'yellowstone.png': null
-//         },
-//         '/pets': {
-//             'trixie_lou.jpeg': null,
-//             'rolo.jpeg': null,
-//             'opal.jpeg': null,
-//             'diana.jpeg': null,
-//         }
-//     },
-//     '/music': {
-//         'hey_programmers.mp3': null,
-//         '/genres': {
-//             '/rock': {
-//                 'everlong.flac': null,
-//                 'livin_on_a_prayer.mp3': null
-//             },
-//             '/hip_hop': {
-//                 'express_yourself.wav': null,
-//                 'ny_state_of_mind.mp3': null
-//             }
-//         }
-//     }
-// };
+let desktop = {
+    '/images': {
+        'app_academy_logo.svg': null,
+        '/parks': {
+            'yosemite.jpeg': null,
+            'acadia.jpeg': null,
+            'yellowstone.png': null
+        },
+        '/pets': {
+            'trixie_lou.jpeg': null,
+            'rolo.jpeg': null,
+            'opal.jpeg': null,
+            'diana.jpeg': null,
+        }
+    },
+    '/music': {
+        'hey_programmers.mp3': null,
+        '/genres': {
+            '/rock': {
+                'everlong.flac': null,
+                'livin_on_a_prayer.mp3': null
+            },
+            '/hip_hop': {
+                'express_yourself.wav': null,
+                'ny_state_of_mind.mp3': null
+            }
+        }
+    }
+};
 //
 // fileFinder(desktop, 'app_academy_logo.svg');     // => true
 // fileFinder(desktop, 'everlong.flac');            // => true
@@ -182,16 +182,25 @@ function fileFinder(directories, targetFile) {
     //     }
     // }
     // return false;
-
-   
-
     for (let dir in directories){
-        if (dir === targetFile || fileFinder(directories[dir], targetFile) === true) {
+        
+        if (dir === targetFile ){
+            debugger
             return true;
+        } else if (dir[0] === "/") {
+            debugger
+            if (fileFinder(directories[dir], targetFile) === true) return true;
         }
     }
-
+   
     return false;
+    
+
+    // refactored
+    // for (let dir in directories){
+    //     if (dir === targetFile || fileFinder(directories[dir], targetFile) === true) return true;
+    //     }
+    // return false
 }
 
 
@@ -206,6 +215,23 @@ function fileFinder(directories, targetFile) {
 // pathFinder(desktop, 'honeybadger.png'));     // => null
 function pathFinder(directories, targetFile) {
 
+    for (let dir in directories){
+        if (dir === targetFile){
+            return '/' + dir
+        }
+
+        if (dir[0] === "/"){
+            path = pathFinder(directories[dir], targetFile)
+            if (path !== null){
+                //if you hit this if condition
+                // that means you were on the right path
+                return dir + path;
+                // you don't need to add `/` to dir because dir already has `/`
+            } 
+        }
+    }
+
+    return null;
 }
 
 
