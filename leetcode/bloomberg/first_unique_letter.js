@@ -10,17 +10,17 @@
  
  1. brute force way 
  - Using two for loops, the first for loop will iterate from the first letter in the string, the second loop will iterate from the second letter to avoid comparing itself
- - Time complexity will be O(n)
+ - Time complexity will be O(n**2)
  
- 2. Algorithm - bsearch w/ 2 pointers => this would not work because this is string, not numbers 
- 
- 3. data structure - Hash 
- - var of empty Hash to store a letter as key and num of letters as value
- - var of tracking a letter
- - var of tracking the index of the single letter 
+ 2. data structure - Hash (using more spaces )
+ - var nonRepeat of empty Hash to store a letter as key and index as value
+ - var repeated of empty Hash to store repeated letter 
  - for loop to iterate the string 
- - if same letter key, increment the counter, if another single letter comes up, return the existing single letter in the hash before saving the second single letter in hash
- - Time Complexity will be O(N)
+ - Store letter in repeated hash. store letter as key and index as value to nonRepeat hash. if the next letter exists in repeated hash, delete the letter from nonRepeat. 
+ - Eventually the nonRepeat hash will have all single letters with its index. 
+ - return the min number from the nonRepeat hash
+ if hash is empty return -1. 
+ - Time Complexity will be O(N) by average
  
  "loveleetcode"
   ^
