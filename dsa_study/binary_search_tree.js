@@ -15,10 +15,10 @@ class BinarySearchTree {
 
    insert(value){
       // by inserting node, build BST
-      const node = new Node(value);
-      this.root ? this.root : this.root = node;
-      let currentNode = this.root;
-      
+      // const node = new Node(value);
+      // this.root ? this.root : this.root = node;
+      // let currentNode = this.root;
+     
       // while (currentNode !== node){
       //    if (currentNode.value < node.value){
       //       currentNode.right ? currentNode = currentNode.right : currentNode.right = node; 
@@ -29,12 +29,31 @@ class BinarySearchTree {
       // }
 
       // return currentNode; 
+      const node = new Node(value);
+      if (!this.root) {
+         this.root = node;
+         debugger
+         return this;
+      }
+      let currentNode = this.root;
 
       while (true){
+         // debugger
          if (currentNode.value < node.value){
-            
+            // debugger
+            if (!currentNode.right) {
+               currentNode.right = node;
+               return this;
+            }
+            currentNode = currentNode.right
          } else{
-            
+            // debugger
+            if (currentNode.left === null){
+               // debugger
+               currentNode.left = node;
+               return this;
+            }
+            currentNode = currentNode.right
          }
       }
 
@@ -62,14 +81,14 @@ class BinarySearchTree {
 const tree = new BinarySearchTree();
 tree.insert(9)
 tree.insert(4)
-tree.insert(6)
-tree.insert(20)
-tree.insert(170)
-tree.insert(15)
-tree.insert(1)
+// tree.insert(6)
+// tree.insert(20)
+// tree.insert(170)
+// tree.insert(15)
+// tree.insert(1)
 
-console.log(tree)
-JSON.stringify(traverse(tree.root))
+// console.log(tree)
+// JSON.stringify(traverse(tree.root))
 
 //     9
 //  4     20
