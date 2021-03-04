@@ -6,7 +6,11 @@ class Node {
    }
 }
 
-
+// Binary Search Tree is a special type of binary tree. 
+// To be a binary tree, you only need two children at most
+// To be a binary search tree, you have couple rules that first, 
+//the values of child nodes on left sides are lesser than the node
+// the values of child nodes on right sides are greater than the node
 
 class BinarySearchTree {
    constructor() {
@@ -74,6 +78,93 @@ class BinarySearchTree {
       }
 
       return -1;
+   }
+
+   remove(){
+      // you don't only need to track of currentN, you also need to track the parentN
+
+      let currN = this.root;
+      let parN = null;
+
+      while (currN){
+         if (value < currN.value){
+            parN = currN;
+            currN = currN.right;
+         } else if (value > currN.value){
+            parN = currN;
+            currN = currN.left;
+         } else {
+            //currN.value === value!
+            //usually, to replace this currN, you have to find the min child from the right side because you need a child that is bigger than currN but less than res of the right side children. 
+            // so probably you would need getMinChild helper
+            
+            //option1. no right child! (no replacement)
+            if (currN.right === null){
+               if (parN === null){
+                  //currN is the root node
+                  this.root = currN.left; 
+                  //because there is no right child, left should be the root node
+               } else {
+                  //if currN < parent(ex. 1 > 14), make curr's left child a left child of curr
+                  if (currN.value < parN.value){
+                     parN.left = currN.left;
+
+                     //if currN > parent (Ex 14 < 1), make cur's left child a right child of parent
+                  } else if (currN.value > parN.value){
+                     parN.right = currN.left;
+                  }
+               }
+               
+               //option2. right child that doesn't have a left child
+            } else if (currN.right.left === null){
+               currN.right.left = currN.left;
+               if (parN === null){
+                  this.root = currN.left;
+               } else {
+                  if (currN.value < parN.value){
+                     parN.left = currN.right;
+                  } else if (currN.value > parN.value){
+                     parN.right = currN.right;
+                  }
+               }
+
+
+               //option3. right child that has a left child
+            } else if (currN.right.left){
+               let leftMinParent = currN.right;
+               let leftMin = currN.right.left;
+               while (leftMin.left !== null){
+                  leftMinParent = leftMin;
+                  leftMin = leftMin.left;
+               }
+               leftMinParent.left = leftMin.right; 
+               leftMin.left = currN.left;
+               leftMin.right = currN.right;
+
+               if (parN === null){
+                  this.root = leftMin;
+               }else {
+                  if (currN.value < parN){
+                     parN.left = leftMost;
+                  }else if (currN.value > parN){
+                     parN.right = leftMost;
+                  }
+               }
+               
+            }
+
+            return true;
+         }
+      }
+     
+   }
+
+   getMinChild(parentN){
+      let currN = parentN;
+      while (currN.left !== null){
+         currN = currN.left;
+      }
+      return currN;
    }
 }
 
