@@ -37,6 +37,7 @@ https://leetcode.com/problems/merge-two-sorted-lists/
 
       1st input 1 - 2 - 4 
       2nd input 1 - 3 - 4 - 5 - 6- 7
+
        dummy null - 1 - 1
       output 1 - 1 - 2 - 3 - 4 - 4 output.next = currN2.next
       currN3 = output.next
@@ -97,3 +98,79 @@ function mergeLinkedLists (l1, l2){
   2nd input 1 - 3 - 4 - 5 - 6- 7
   dummy null - 1 - 1
  */
+//cover edge cases
+// if (!l1 && !l2) return null;
+// if (!l1) {
+//    return l2;
+// } else if (!l2) {
+//    return l1;
+// }
+
+ function mergeList(L1, L2){
+   const head = new ListNode();//start with null;
+   let currN = head;
+
+   while (L1 && L2){
+      //we can use L1 and L2 variables
+      if (L1.val >= L2.val){
+         currN.next = L2;
+         L2 = L2.next;
+      } else {
+         currN.next = L1;
+         L1 = L1.next;
+      }
+      currN = currN.next;
+   }
+   
+   currN.next = L1 ? L1 : L2 
+
+   return head.next;
+ }
+
+
+
+//  7 - 6 - 5- 3 - 2
+
+//  9 - 8 - 7
+
+//   2 - 3 - 5 - 6 -7 
+  
+//   7 - 8 - 9
+
+//  head = new ListNode();
+//  currN = head;
+
+//  76532 + 987 = 77519
+
+//  9 - 1 - 5 - 7 - 7
+
+// 2 - 2
+
+// 9 - 9 - 9 - 9 - 9 
+
+// 0 - 0 - 0 - 0 - 0 - 1
+
+function sumLists(L1, L2){
+   const head = new ListNode();
+   let currN = head;
+   let carryOver = 0;
+   
+   while (L1 || L2){
+      const val1 = L1 ? L1.val : 0;
+      const val2 = L2 ? L2.val : 0;
+      const sum = val1 + val2 + carryOver;
+     
+      if (sum > 9){
+         carryOver = 1;
+         const leftover = sum % 10
+         currN.next = new ListNode(leftover);
+      } else {
+         carryOver = 0;
+         currN.next = new ListNode(sum);
+      }
+      L1 = L1 ? L1.next : null;
+      L2 = L2 ? L2.next : null;
+      currN = currN.next;
+   }
+   return head.next;
+}
