@@ -47,5 +47,63 @@ Explanation:
 1. Remove 3 'b': "aaabbbacd" => "aaaacd"
 2. Remove 4 'a': "aaaacd" => "cd"
 
+stack = [
+//Python answer
+stack = []
+for i in range(len(input)):
+        if stack && stack[-1][0] == input[i]:
+            stack[-1][1] += 1
+        else:
+            stack.append([input[i],1])
+        if i === str.length-1 || str[i] != str[i+1]:
+            if stack[-1][1] >= 3:
+                stack.pop()
+    #print(stack)
+    ans = ''
+    for elem in stack:
+        ans += elem[0]*elem[1]
+    return ans
+    
+    
+print(candy_crush("aaaabbbc")) #c
+print(candy_crush("aabbbacd")) #cd
+print(candy_crush("aabbba")) #blank expected
+print(candy_crush("aabbbaacd")) #cd
+print(candy_crush("dddabbbbaccccaax")) # x
 
 */
+
+function greedyCandyCrush1D(str){
+   const stack = [];
+   const lastIdx = str.length - 1
+   
+   for (let char of str){
+      const lastStack = stack[str.length - 1];
+      if (stack.length && lastStack[0] === char){
+         lastStack[1] += 1;
+         if (lastStack[1] >= 3){
+            stack.pop();
+         }
+      } else {
+         stack.push([char, 1])
+      }
+
+      
+   }
+   let output = '';
+   for (let [char, num] of stack){
+      output += char.repeat(num)
+   }
+
+   return output;
+}
+
+/**
+ * 
+ * The followup question:
+ * 
+ * https://gist.github.com/atiwari3bu/6feb336753cfc65d58d8b513a8136ae3
+ */
+function shortestCandyCrush(str){
+
+}

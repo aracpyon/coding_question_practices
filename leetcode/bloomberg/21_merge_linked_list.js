@@ -128,6 +128,45 @@ function mergeLinkedLists (l1, l2){
  }
 
 
+ /**
+  * 
+  * @param {ListNode} L1 
+  * @param {*} L2 
+  * 
+  * input two LLs, length could be different, sorted 
+  * output LL
+  * use L1 and L2 as pointers
+  * 1 - 3 - 5 - 6
+  * 2 - 3 - 4 - 7 - 8 - 9
+  * 
+  * 1 - 2 - 3 - 9
+  * 4 - 5 - 8
+  * 
+  * null - 1 - 2 - 3 - 3 - 4 - 5 - 6 - 8 - 9 
+  * 
+  * 
+  * head = centinal ListNode 
+  * currN = head.next;
+  * 
+  * while (L1 && L2 )
+  * if else condition 
+  *  L1.val > L2.val
+  *   currN.next = L2
+  *   L2 = L2.next 
+  *   currN = currN.next
+  * 
+  * currN.next = (L1 || L2)  
+  * 
+  * return head.next;
+  * 
+  */
+function mergeLinkedList(L1, L2){
+   
+}
+
+
+
+
 
 //  7 - 6 - 5- 3 - 2
 
@@ -149,6 +188,10 @@ function mergeLinkedLists (l1, l2){
 // 9 - 9 - 9 - 9 - 9 
 
 // 0 - 0 - 0 - 0 - 0 - 1
+
+
+
+
 
 function sumLists(L1, L2){
    const head = new ListNode();
